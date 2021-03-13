@@ -1,8 +1,5 @@
-//list.c: 链表ADT头文件list.h的支持文件
-
 #include "list.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 list newList(void) //新建一个初始化链表
 {
@@ -22,7 +19,10 @@ int newData(list linkedList,LISTDATA data) //给链表加入新数据
 
     if(linkedList->head == NULL){ //假如新增入节点是第一个节点
         linkedList->head = (node*)malloc(sizeof(node)); //先给head申请内存
-        if(linkedList->head == NULL) return -1; //申请失败返回-1
+        if(linkedList->head == NULL){
+            free(newNode); //失败时先释放newNode
+            return -1; //再返回-1
+        }
         linkedList->head->next = newNode; //把新节点写到head的下一个节点
         
     }
@@ -37,10 +37,8 @@ int newData(list linkedList,LISTDATA data) //给链表加入新数据
 LISTDATA getValue(list linkedList,int index) //取链表值
 {
     index++; //循环次数等于索引加1(为了跳过head节点)
-    if(index > linkedList->len){
-        puts("错误：索引越界");
-        return linkedList->head->data;
-    }//若索引超出长度，返回空结构体（head节点的结构体不放数据）
+    if(index > linkedList->len)  return linkedList->head->data;
+    //若索引超出长度，返回空结构体（head节点的结构体不放数据）
     node* h = linkedList->head;
     for(int i=0;i!=index;++i)
         h = h->next; //循环到目标节点
@@ -91,4 +89,3 @@ int deleteList(list linkedList) //释放整个链表
     free(linkedList);//释放链表ADT
     return 0;
 }
-
