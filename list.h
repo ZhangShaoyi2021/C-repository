@@ -5,6 +5,11 @@
 
 //宏、类型定义：
 
+//使用时自行修改LISTDATA结构
+typedef struct dataField{
+    char c;
+}LISTDATA;
+
 typedef struct NODE{
     LISTDATA data;
     struct NODE* next; //指针域 next指针
@@ -15,11 +20,6 @@ typedef struct LISTSTR{
     int len;
 }listStruct;
 typedef listStruct* list;
-
-//使用时自行修改LISTDATA结构
-typedef struct dataField{
-    char c;
-}LISTDATA;
 
 //函数定义：
 
